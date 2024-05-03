@@ -1,4 +1,5 @@
-import mongoose, { Schema, Types, model, Document } from "mongoose";
+import { Schema, model, Document } from "mongoose";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface IPokemon extends Document {
     id: string;
@@ -19,19 +20,42 @@ const PokemonSchema = new Schema<IPokemon>(
       type: String,
       required: true,
       unique: true,
+      default: () => uuidv4()
     },
     name: {
       type: String,
       required: true,
       unique: true,
     },
-    img: String,
-    hp: Number,
-    attack: Number,
-    defense: Number,
-    speed: Number,
-    height: Number,
-    weight: Number
+    img: {
+      type: String,
+    },
+    hp: {
+      type: Number,
+      required: true
+    },
+    attack: {
+      type: Number,
+      required: true
+    },
+    defense: {
+      type: Number,
+      required: true
+    },
+    speed: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number
+    },
+    weight: {
+      type: Number
+    },
+    createdInDb: {
+      type: Boolean,
+      defaultValue: true
+    }
   },
   {
     timestamps: true,

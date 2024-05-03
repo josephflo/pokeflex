@@ -1,5 +1,6 @@
 import {Request, Response} from 'express'
 import { handleHttp } from '../utils/error.handle'
+import {createPokemonService, getAllPokemonsService} from '../services/pokemonServices'
 
 
 const getPokemon = (req: Request, res: Response) => {
@@ -10,15 +11,16 @@ const getPokemon = (req: Request, res: Response) => {
   }
 }
 
-const getAllPokemons = (req: Request, res: Response) => {
+const getAllPokemons = async (req: Request, res: Response) => {
   try {
-    res.send({data: 'AllPokemons'})
+    const response = await getAllPokemonsService()
+    res.send(response)
   } catch (error) {
     
   }
 }
 
-const updatePokemon = (req: Request, res: Response) => {
+const updatePokemon = async (req: Request, res: Response) => {
   try {
     
   } catch (error) {
@@ -26,15 +28,17 @@ const updatePokemon = (req: Request, res: Response) => {
   }
 }
 
-const createPokemon = ({body}: Request, res: Response) => {
+const createPokemon = async ({body}: Request, res: Response) => {
   try {
-    res.send(body)
+    const newPokemon = await createPokemonService(body)
+    res.send(newPokemon)
+    console.log(`New Pokemon has been created: ${newPokemon}`)
   } catch (error) {
-    handleHttp(res, 'ERROR_CREATE_POKEMON')
+    handleHttp(res, 'ERROR_CREATE_POKEMON',error)
   }
 }
 
-const deletePokemon = (req: Request, res: Response) => {
+const deletePokemon = async (req: Request, res: Response) => {
 
 }
 
